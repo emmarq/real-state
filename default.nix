@@ -5,6 +5,7 @@ with pkgs;
 mkShellNoCC {
   packages = [
     dotnetCorePackages.dotnet_9.sdk
+    nodejs
     neovim
     ripgrep
     fd
