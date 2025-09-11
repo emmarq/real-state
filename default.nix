@@ -1,20 +1,38 @@
-{ revA ? "1d85984351e0c8952506a65cb276989c7248d120", pkgs ? import
+{ revA ? "e50c883d982e8f6d4333880e900f6ed19215e8ea", pkgs ? import
   (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${revA}.tar.gz") { }
 }:
 with pkgs;
-mkShellNoCC {
+mkShell {
   packages = [
-    dotnetCorePackages.dotnet_9.sdk
+    csharp-ls
+    dotnet-sdk_9
     nodejs
+    mongosh
     neovim
-    ripgrep
-    fd
-    lazygit
-    ast-grep
+    git
+    python3
     cargo
+    ripgrep
+    lazygit
+    fd
+    ast-grep
     unzip
     nixfmt-classic
     fzf
-    python3
   ];
+
+shellHook = ''
+    LAZYVIM_CONFIG_DIR="$HOME/.config/nvim-lazy"
+
+    if [ ! -d "$LAZYVIM_CONFIG_DIR" ]; then
+      git clone https://github.com/LazyVim/starter "$LAZYVIM_CONFIG_DIR"
+      rm -rf ~/.config/nvim-lazy/.git
+      cp etc/csharp_ls.lua  ~/.config/nvim-lazy/lua/plugins/
+    fi
+  '';
+
+  env = {
+    NVIM_APPNAME = "nvim-lazy";
+    EDITOR = "nvim";
+  };
 }
