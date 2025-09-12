@@ -8,17 +8,20 @@ mkShell {
     dotnet-sdk_9
     nodejs
     mongosh
+    tmux
+    nushell
     neovim
     git
+    lazygit
+    curl
+    fzf 
+    ripgrep 
+    fd 
     python3
     cargo
-    ripgrep
-    lazygit
-    fd
     ast-grep
     unzip
     nixfmt-classic
-    fzf
   ];
 
 shellHook = ''
