@@ -1,0 +1,72 @@
+using RealStateApi.Models;
+using RealStateApi.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace RealStateApi.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class RealStatesController : ControllerBase
+{
+    private readonly RealStatesService _realStatesService;
+
+    public RealStatesController(RealStatesService realStatesService) =>
+        _realStatesService = realStatesService;
+
+    [HttpGet]
+    public async Task<List<RealState>> Get() =>
+        await _realStatesService.GetAsync();
+
+    [HttpGet("{id:length(24)}")]
+    public async Task<ActionResult<RealState>> Get(string id)
+    {
+        var realState = await _realStatesService.GetAsync(id);
+
+        if (realState is null)
+        {
+            return NotFound();
+        }
+
+        return realState;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post(RealState newRealState)
+    {
+        await _realStatesService.CreateAsync(newRealState);
+
+        return CreatedAtAction(nameof(Get), new { id = newRealState.Id }, newRealState);
+    }
+
+    [HttpPut("{id:length(24)}")]
+    public async Task<IActionResult> Update(string id, RealState updatedRealState)
+    {
+        var realState = await _realStatesService.GetAsync(id);
+
+        if (realState is null)
+        {
+            return NotFound();
+        }
+
+        updatedRealState.Id = realState.Id;
+
+        await _realStatesService.UpdateAsync(id, updatedRealState);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:length(24)}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var realState = await _realStatesService.GetAsync(id);
+
+        if (realState is null)
+        {
+            return NotFound();
+        }
+
+        await _realStatesService.RemoveAsync(id);
+
+        return NoContent();
+    }
+}
