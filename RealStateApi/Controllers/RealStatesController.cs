@@ -14,8 +14,29 @@ public class RealStatesController : ControllerBase
         _realStatesService = realStatesService;
 
     [HttpGet]
-    public async Task<List<RealState>> Get() =>
-        await _realStatesService.GetAsync();
+    public async Task<ActionResult<PagedResult<RealState>>> Get(
+         [FromQuery] int pageNumber = 1,
+         [FromQuery] int pageSize = 10,
+         [FromQuery] string? sortBy = null,
+         [FromQuery] bool sortDescending = false,
+         [FromQuery] RealStateFilter? filters = null)
+    {
+        var pagination = new PaginationParams
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var sortParams = new SortParams
+        {
+            SortBy = sortBy,
+            SortDescending = sortDescending
+        };
+
+        var result = await _realStatesService.GetPagedAsync(pagination, filters, sortParams);
+
+        return Ok(result);
+    }
 
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<RealState>> Get(string id)
