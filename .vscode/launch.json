@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch .NET WebAPI",
+      "type": "netcoredbg",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/RealStateApi/bin/Debug/net9.0/RealStateApi.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/RealStateApi",
+      "stopAtEntry": false,
+      "console": "internalConsole",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/RealStateApi/Views"
+      }
+    }
+  ]
+}

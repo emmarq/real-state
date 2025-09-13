@@ -5,6 +5,7 @@ with pkgs;
 mkShell {
   packages = [
     csharp-ls
+    netcoredbg
     dotnet-sdk_9
     nodejs
     mongosh
@@ -30,7 +31,7 @@ shellHook = ''
     if [ ! -d "$LAZYVIM_CONFIG_DIR" ]; then
       git clone https://github.com/LazyVim/starter "$LAZYVIM_CONFIG_DIR"
       rm -rf ~/.config/nvim-lazy/.git
-      cp etc/csharp_ls.lua  ~/.config/nvim-lazy/lua/plugins/
+      cp etc/plugins.lua  ~/.config/nvim-lazy/lua/plugins/
     fi
   '';
 
