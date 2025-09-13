@@ -134,6 +134,7 @@ for (var i = 0; i < 1000; i++) {
       },
     ],
   });
+  count = count + 1;
 }
 
 db = db.getSiblingDB("RealStatesStore");
