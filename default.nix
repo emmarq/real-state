@@ -8,6 +8,7 @@ mkShell {
     netcoredbg
     dotnet-sdk_9
     nodejs
+    openapi-generator-cli
     mongosh
     tmux
     nushell
