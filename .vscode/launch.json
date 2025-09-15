@@ -17,6 +17,14 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/RealStateApi/Views"
       }
+    },
+    {
+      "name": "Next.js: debug server-side",
+      "type": "pwa-node",
+      "request": "attach",
+      "port": 9231,
+      "skipFiles": ["<node_internals>/**", "node_modules/**"],
+      "cwd": "${workspaceFolder}/real-state-web"
     }
   ]
 }
