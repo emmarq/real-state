@@ -1,46 +1,41 @@
-import { PagedResultOfRealState } from "@/api";
-import Filter, { FilterData } from "./Filter";
-import { useSearchParams } from "next/navigation";
+import Filter from "./Filter";
+import { Suspense } from "react";
+import RealStateList from "./RealStateList";
+import { IPagination, RealStateFilter, Sort } from "@/utils/service";
 
-type Props = {
-  data: PagedResultOfRealState;
+export type Props = {
+  searchParams: Promise<RealStateFilter & IPagination & Sort>;
 };
 
-const setParam = (params: URLSearchParams, name: string, value?: string) => {
-  if (value) params.set(name, value);
-  else params.delete(name);
-};
+const RealStates = async (props: Props) => {
+  const searchParams = await props.searchParams;
 
-const RealStates = async ({ data }: Props) => {
-  const searchParams = useSearchParams();
-
-  const filter: FilterData = {
-    name: searchParams.get("name")?.toString(),
-    address: searchParams.get("address")?.toString(),
+  const filter: RealStateFilter = {
+    name: searchParams?.name,
+    address: searchParams?.address,
+    minPrice: searchParams?.minPrice,
+    maxPrice: searchParams?.maxPrice,
   };
-
-  const handleChangeFilter = (filter: FilterData) => {
-    const params = new URLSearchParams(searchParams);
-    setParam(params, "name", filter.name);
-    setParam(params, "address", filter.address);
-    setParam(params, "minPrice", filter.minPrice?.toString());
-    setParam(params, "maxPrice", filter.maxPrice?.toString());
+  const pagination: IPagination = {
+    pageNumber: searchParams.pageNumber,
+    pageSize: searchParams.pageSize,
+  };
+  const sort: Sort = {
+    sortBy: searchParams.sortBy,
+    sortDirection: searchParams.sortDirection,
   };
 
   return (
-    <div>
-      <h1>Real states</h1>
-      <p>Filters</p>
-      <Filter filter={filter} onChangeFilter={handleChangeFilter} />
-      <ul>
-        {data.Items?.map((realState) => {
-          return (
-            <li key={realState.Id}>
-              <div>{realState.Name}</div>
-            </li>
-          );
-        })}
-      </ul>
+    <div className="">
+      <main className="">
+        <h1 className="px-4 text-3xl py-4 font-bold">Real states</h1>
+        <p className="px-4 text-lg">Filters</p>
+        <Filter />
+        <Suspense key={JSON.stringify(searchParams)}>
+          <RealStateList filter={filter} sort={sort} pagination={pagination} />
+        </Suspense>
+      </main>
+      <footer className=""></footer>
     </div>
   );
 };
