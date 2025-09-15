@@ -89,7 +89,7 @@ return {
     "mfussenegger/nvim-dap",
     optional = true,
     opts = function()
-      local dap, dapui = require("dap"), require("dapui")
+      local dap = require("dap")
       if not dap.adapters["netcoredbg"] then
         require("dap").adapters["netcoredbg"] = {
           type = "executable",

@@ -34,6 +34,10 @@ shellHook = ''
       rm -rf ~/.config/nvim-lazy/.git
       cp etc/plugins.lua  ~/.config/nvim-lazy/lua/plugins/
     fi
+
+    chmod 755 etc/create_docker_mongo.sh
+    chmod 755 etc/tmux_session.sh
+    etc/tmux_session.sh
   '';
 
   env = {
