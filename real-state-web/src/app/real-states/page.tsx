@@ -1,7 +1,6 @@
 import RealStates from "@/components/RealStates";
-import { fetchRealStates } from "@/utils/service";
+import { Props } from "@/components/RealStates/RealStates";
 
-export default async function RealStatePage() {
-  const response = await fetchRealStates();
-  return <RealStates data={response.data} />;
+export default async function RealStatePage(props: Props) {
+  return <RealStates {...props} />;
 }
