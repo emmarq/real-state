@@ -18,8 +18,9 @@ const TextInput = ({ defaultValue, label, onChangeText }: TextInputProps) => {
   return (
     <div className="py-1 flex align-bottom items-end">
       <label className="w-24 inline-block flex-none">{label}</label>
-      <div className="border-b-1 border-amber-50 flex-1">
+      <div className="border-b-1 border-gray-400 flex-1">
         <input
+          placeholder={label}
           className="w-full"
           defaultValue={defaultValue}
           type="text"
