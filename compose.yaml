@@ -4,17 +4,33 @@ services:
       context: ./RealStateApi
     ports:
       - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - PropertyStoreDatabase__ConnectionString=mongodb://mongo:27017
+      - PropertyStoreDatabase__DatabaseName=RealStatesStore
+    depends_on:
+      - mongo
   web:
     build:
       context: ./real-state-web
     ports:
       - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080
+      - API_BASE_URL=http://backend:8080
+    depends_on:
+      - backend
+
   mongo:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: RealStatesStore
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./etc/seed.js:/docker-entrypoint-initdb.d/seed.js:ro
 
   mongo-express:
     image: mongo-express
@@ -22,7 +38,10 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
       ME_CONFIG_BASICAUTH_ENABLED: true
       ME_CONFIG_BASICAUTH_USERNAME: mongoexpressuser
       ME_CONFIG_BASICAUTH_PASSWORD: mongoexpresspass
+
+volumes:
+  mongodb_data:
