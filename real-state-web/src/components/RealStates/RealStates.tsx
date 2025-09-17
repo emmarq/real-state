@@ -1,10 +1,11 @@
 import Filter from "./Filter";
 import { Suspense } from "react";
 import RealStateList from "./RealStateList";
-import { IPagination, RealStateFilter, Sort } from "@/utils/service";
+import { IPagination, RealStateFilter, Sort as ISort } from "@/utils/service";
+import Sort from "./Sort";
 
 export type Props = {
-  searchParams: Promise<RealStateFilter & IPagination & Sort>;
+  searchParams: Promise<RealStateFilter & IPagination & ISort>;
 };
 
 const RealStates = async (props: Props) => {
@@ -20,7 +21,7 @@ const RealStates = async (props: Props) => {
     pageNumber: searchParams.pageNumber,
     pageSize: searchParams.pageSize,
   };
-  const sort: Sort = {
+  const sort: ISort = {
     sortBy: searchParams.sortBy,
     sortDirection: searchParams.sortDirection,
   };
@@ -31,6 +32,7 @@ const RealStates = async (props: Props) => {
         <h1 className="px-4 text-3xl py-4 font-bold">Real states</h1>
         <p className="px-4 text-lg">Filters</p>
         <Filter />
+        <Sort />
         <Suspense key={JSON.stringify(searchParams)}>
           <RealStateList filter={filter} sort={sort} pagination={pagination} />
         </Suspense>
