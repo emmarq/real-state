@@ -43,10 +43,10 @@ const fetchRealStates = async ({
   return data;
 };
 
-const getRealState = async (id: string) => {
+const fetchRealState = async (id: string) => {
   const data = await realStateApi.realStatesGet2(id);
 
   return data;
 };
 
-export { fetchRealStates, getRealState };
+export { fetchRealStates, fetchRealState };
