@@ -6,3 +6,9 @@ export const setParam = (
   if (value) params.set(name, value);
   else params.delete(name);
 };
+
+export const parseNumber = (value?: string | null) => {
+  const parsed = parseInt(value || "");
+  if (isNaN(parsed)) return undefined;
+  return parsed;
+};
