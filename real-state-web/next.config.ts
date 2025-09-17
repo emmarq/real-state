@@ -5,13 +5,8 @@ const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.pixabay.com",
-        port: "",
-        pathname: "**",
-        search: "",
-      },
+      new URL("https://robohash.org/**"),
+      new URL("https://cdn.pixabay.com/**"),
     ],
   },
 };
