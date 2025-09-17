@@ -17,17 +17,21 @@ const Pagination = ({ currentPage, prevPage, nextPage }: Props) => {
   const nextLink = `${pathname}?${params.toString()}`;
 
   return (
-    <ul>
-      {prevPage && (
-        <li>
-          <Link href={prevLink}>Previous</Link>{" "}
-        </li>
-      )}
-      {nextPage && (
-        <li>
+    <ul className="flex justify-center gap-3">
+      <li>
+        {prevPage ? (
+          <Link href={prevLink}>Previous</Link>
+        ) : (
+          <span className="cursor-not-allowed text-gray-500">Previous</span>
+        )}
+      </li>
+      <li>
+        {nextPage ? (
           <Link href={nextLink}>Next</Link>
-        </li>
-      )}
+        ) : (
+          <span className="cursor-not-allowed text-gray-500">Next</span>
+        )}
+      </li>
     </ul>
   );
 };

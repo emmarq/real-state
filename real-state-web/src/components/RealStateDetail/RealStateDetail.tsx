@@ -3,27 +3,10 @@ import { fetchRealState } from "@/utils/service";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import LeftArrowIcon from "../Icons/LeftArrow";
 
 export type Props = {
   params: Promise<{ id: string }>;
-};
-const LeftIcon = (props: React.SVGProps<SVGSVGElement>) => {
-  return (
-    <svg
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="size-6"
-      {...props}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-      />
-    </svg>
-  );
 };
 const RealStateDetail = async (props: Props) => {
   const params = await props.params;
@@ -31,7 +14,7 @@ const RealStateDetail = async (props: Props) => {
     <div className="">
       <main className="">
         <Link className="flex gap-2" href={"/real-states"}>
-          <LeftIcon width={20} /> Go to real states
+          <LeftArrowIcon width={20} /> Go to real states
         </Link>
         <Suspense>
           <RealState id={params.id} />
@@ -72,7 +55,7 @@ const RealState = async ({ id }: { id: string }) => {
       </div>
       <dl className="p-4 grid grid-cols-[auto_1fr] gap-x-2">
         <dt className="font-bold">Price</dt>
-        <dd>{currencyFormatter.format(realState.Price)}</dd>
+        <dd>{currencyFormatter.format(realState.Price!)}</dd>
         <dt className="font-bold">Address</dt>
         <dd>{realState.Address}</dd>
         <dt className="font-bold">Year</dt>
