@@ -13,7 +13,7 @@ RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
-EXPOSE 8080
+EXPOSE 8080 
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
