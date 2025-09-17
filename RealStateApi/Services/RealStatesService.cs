@@ -48,6 +48,19 @@ public class RealStatesService
     public async Task<RealState?> GetAsync(string id) =>
         await _realStatesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+    public async Task<RealStatePriceRange?> GetPriceLimitsAsync()
+    {
+        var min = await _realStatesCollection.Find(_ => true).Sort(
+        Builders<RealState>.Sort.Ascending("price")
+            ).Limit(1).FirstOrDefaultAsync();
+
+        var max = await _realStatesCollection.Find(_ => true).Sort(
+        Builders<RealState>.Sort.Descending("price")
+            ).Limit(1).FirstOrDefaultAsync();
+
+        return new RealStatePriceRange { MinPrice = min.Price, MaxPrice = max.Price };
+    }
+
     public async Task CreateAsync(RealState newRealState) =>
         await _realStatesCollection.InsertOneAsync(newRealState);
 

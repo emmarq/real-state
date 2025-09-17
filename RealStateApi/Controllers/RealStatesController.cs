@@ -38,6 +38,19 @@ public class RealStatesController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("price-range")]
+    public async Task<ActionResult<RealStatePriceRange>> Get()
+    {
+        var RealStatePriceRange = await _realStatesService.GetPriceLimitsAsync();
+
+        if (RealStatePriceRange is null)
+        {
+            return NotFound();
+        }
+
+        return RealStatePriceRange;
+    }
+
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<RealState>> Get(string id)
     {
