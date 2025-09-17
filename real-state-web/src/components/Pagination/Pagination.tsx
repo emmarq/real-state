@@ -2,6 +2,8 @@
 import { setParam } from "@/utils";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import LeftArrowIcon from "../Icons/LeftArrow";
+import RightArrowIcon from "../Icons/RigthArrow";
 
 type Props = { currentPage: number; nextPage?: boolean; prevPage?: boolean };
 
@@ -17,19 +19,35 @@ const Pagination = ({ currentPage, prevPage, nextPage }: Props) => {
   const nextLink = `${pathname}?${params.toString()}`;
 
   return (
-    <ul className="flex justify-center gap-3">
+    <ul className="flex justify-center gap-3 pb-4">
       <li>
         {prevPage ? (
-          <Link href={prevLink}>Previous</Link>
+          <Link href={prevLink}>
+            <div className="flex">
+              <LeftArrowIcon width={20} />
+              <span>Previous</span>
+            </div>
+          </Link>
         ) : (
-          <span className="cursor-not-allowed text-gray-500">Previous</span>
+          <div className="flex">
+            <LeftArrowIcon width={20} className="text-gray-500" />
+            <span className="cursor-not-allowed text-gray-500">Previous</span>
+          </div>
         )}
       </li>
       <li>
         {nextPage ? (
-          <Link href={nextLink}>Next</Link>
+          <Link href={nextLink}>
+            <div className="flex">
+              <span>Next</span>
+              <RightArrowIcon width={20} />
+            </div>
+          </Link>
         ) : (
-          <span className="cursor-not-allowed text-gray-500">Next</span>
+          <div className="flex">
+            <span className="cursor-not-allowed text-gray-500">Next</span>
+            <RightArrowIcon width={20} className="text-gray-500" />
+          </div>
         )}
       </li>
     </ul>

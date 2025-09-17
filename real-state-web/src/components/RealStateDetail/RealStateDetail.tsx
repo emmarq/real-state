@@ -13,7 +13,7 @@ const RealStateDetail = async (props: Props) => {
   return (
     <div className="">
       <main className="">
-        <Link className="flex gap-2" href={"/real-states"}>
+        <Link className="flex gap-2 pl-4 pt-4" href={"/real-states"}>
           <LeftArrowIcon width={20} /> Go to real states
         </Link>
         <Suspense>
