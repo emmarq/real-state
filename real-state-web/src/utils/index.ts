@@ -12,3 +12,9 @@ export const parseNumber = (value?: string | null) => {
   if (isNaN(parsed)) return undefined;
   return parsed;
 };
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});

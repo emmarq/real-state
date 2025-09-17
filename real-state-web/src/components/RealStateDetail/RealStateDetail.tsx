@@ -1,3 +1,4 @@
+import { currencyFormatter } from "@/utils";
 import { fetchRealState } from "@/utils/service";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,7 +72,7 @@ const RealState = async ({ id }: { id: string }) => {
       </div>
       <dl className="p-4 grid grid-cols-[auto_1fr] gap-x-2">
         <dt className="font-bold">Price</dt>
-        <dd>{realState.Price}</dd>
+        <dd>{currencyFormatter.format(realState.Price)}</dd>
         <dt className="font-bold">Address</dt>
         <dd>{realState.Address}</dd>
         <dt className="font-bold">Year</dt>

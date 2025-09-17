@@ -44,9 +44,15 @@ const fetchRealStates = async ({
 };
 
 const fetchRealState = async (id: string) => {
-  const data = await realStateApi.realStatesGet2(id);
+  const data = await realStateApi.realStatesGet3(id);
 
   return data;
 };
 
-export { fetchRealStates, fetchRealState };
+const fetchPriceRange = async () => {
+  const data = await realStateApi.realStatesGet2();
+
+  return data;
+};
+
+export { fetchRealStates, fetchRealState, fetchPriceRange };
