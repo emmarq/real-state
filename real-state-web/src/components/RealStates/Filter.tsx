@@ -1,9 +1,9 @@
 "use client";
 
-import { setParam } from "@/utils";
+import { parseNumber, setParam } from "@/utils";
 import { RealStateFilter } from "@/utils/service";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 type TextInputProps = {
   defaultValue: string;
@@ -33,52 +33,49 @@ const Filter = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const [name, setName] = useState(searchParams.get("name") || "");
-  const [address, setAddress] = useState(searchParams.get("address") || "");
-  const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "");
-  const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
+
+  const defaultName = searchParams.get("name") || "";
+  const defaultAddress = searchParams.get("address") || "";
+  const defaultMinPrice = searchParams.get("minPrice");
+  const defaultMaxPrice = searchParams.get("maxPrice");
+
+  const [filter, setFilter] = useState<RealStateFilter>({
+    name: defaultName,
+    address: defaultAddress,
+    minPrice: parseNumber(defaultMinPrice),
+    maxPrice: parseNumber(defaultMaxPrice),
+  });
   const timeout = useRef<NodeJS.Timeout | string | number>(0);
 
   const handleChangeFilter = (filter: RealStateFilter) => {
-    const params = new URLSearchParams(searchParams);
-    setParam(params, "name", filter.name);
-    setParam(params, "address", filter.address);
-    setParam(params, "minPrice", filter.minPrice?.toString());
-    setParam(params, "maxPrice", filter.maxPrice?.toString());
-    setParam(params, "pageNumber", "1");
-    replace(`${pathname}?${params.toString()}`);
-  };
-
-  useEffect(() => {
+    setFilter(filter);
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      const parsedPrices = {
-        min: parseInt(minPrice),
-        max: parseInt(maxPrice),
-      };
-
-      const _minPrice = isNaN(parsedPrices.min) ? undefined : parsedPrices.min;
-      const _maxPrice = isNaN(parsedPrices.max) ? undefined : parsedPrices.max;
-
-      handleChangeFilter({
-        name,
-        address,
-        minPrice: _minPrice,
-        maxPrice: _maxPrice,
-      });
+      const params = new URLSearchParams(searchParams);
+      setParam(params, "name", filter.name);
+      setParam(params, "address", filter.address);
+      setParam(params, "minPrice", filter.minPrice?.toString());
+      setParam(params, "maxPrice", filter.maxPrice?.toString());
+      setParam(params, "pageNumber", "1");
+      replace(`${pathname}?${params.toString()}`);
     }, 300);
-    return () => {
-      clearTimeout(timeout.current);
-    };
-  }, [name, address]);
+  };
 
   return (
     <div className="px-4">
-      <TextInput defaultValue={name} label="Name" onChangeText={setName} />
       <TextInput
-        defaultValue={address}
+        defaultValue={defaultName}
+        label="Name"
+        onChangeText={(name) => {
+          handleChangeFilter({ ...filter, name });
+        }}
+      />
+      <TextInput
+        defaultValue={defaultAddress}
         label="Address"
-        onChangeText={setAddress}
+        onChangeText={(address) => {
+          handleChangeFilter({ ...filter, address });
+        }}
       />
     </div>
   );
