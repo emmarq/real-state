@@ -1,9 +1,14 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 api.ts
 base.ts
 common.ts
 configuration.ts
+docs/PagedResultOfRealState.md
+docs/RealState.md
+docs/RealStateOwner.md
+docs/RealStatePriceRange.md
+docs/RealStateTrace.md
+docs/RealStatesApi.md
 git_push.sh
 index.ts

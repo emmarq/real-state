@@ -167,6 +167,25 @@ export interface RealStateOwner {
 /**
  * 
  * @export
+ * @interface RealStatePriceRange
+ */
+export interface RealStatePriceRange {
+    /**
+     * 
+     * @type {number}
+     * @memberof RealStatePriceRange
+     */
+    'MinPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RealStatePriceRange
+     */
+    'MaxPrice'?: number;
+}
+/**
+ * 
+ * @export
  * @interface RealStateTrace
  */
 export interface RealStateTrace {
@@ -306,13 +325,42 @@ export const RealStatesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        realStatesGet2: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/RealStates/price-range`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        realStatesGet2: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        realStatesGet3: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('realStatesGet2', 'id', id)
+            assertParamExists('realStatesGet3', 'id', id)
             const localVarPath = `/api/RealStates/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -454,14 +502,25 @@ export const RealStatesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async realStatesGet2(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RealStatePriceRange>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.realStatesGet2(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RealStatesApi.realStatesGet2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async realStatesGet2(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RealState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.realStatesGet2(id, options);
+        async realStatesGet3(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RealState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.realStatesGet3(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RealStatesApi.realStatesGet2']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RealStatesApi.realStatesGet3']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -526,12 +585,20 @@ export const RealStatesApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        realStatesGet2(options?: RawAxiosRequestConfig): AxiosPromise<RealStatePriceRange> {
+            return localVarFp.realStatesGet2(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        realStatesGet2(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RealState> {
-            return localVarFp.realStatesGet2(id, options).then((request) => request(axios, basePath));
+        realStatesGet3(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RealState> {
+            return localVarFp.realStatesGet3(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -593,13 +660,23 @@ export class RealStatesApi extends BaseAPI {
 
     /**
      * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RealStatesApi
+     */
+    public realStatesGet2(options?: RawAxiosRequestConfig) {
+        return RealStatesApiFp(this.configuration).realStatesGet2(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RealStatesApi
      */
-    public realStatesGet2(id: string, options?: RawAxiosRequestConfig) {
-        return RealStatesApiFp(this.configuration).realStatesGet2(id, options).then((request) => request(this.axios, this.basePath));
+    public realStatesGet3(id: string, options?: RawAxiosRequestConfig) {
+        return RealStatesApiFp(this.configuration).realStatesGet3(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
