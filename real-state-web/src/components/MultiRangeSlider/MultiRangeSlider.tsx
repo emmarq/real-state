@@ -100,10 +100,10 @@ const MultiRangeSlider = ({
           ref={range}
           className={clsx(styles.slider__range, "bg-gray-400")}
         ></div>
-        <div className={clsx(styles.slider__left_value, "")}>
+        <div className={clsx(styles.slider__left_value, "text-foreground")}>
           {currencyFormatter.format(minVal)}
         </div>
-        <div className={styles.slider__right_value}>
+        <div className={clsx(styles.slider__right_value, "text-foreground")}>
           {currencyFormatter.format(maxVal)}
         </div>
       </div>

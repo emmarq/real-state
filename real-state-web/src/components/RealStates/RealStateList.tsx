@@ -14,7 +14,7 @@ const RealStateList = async ({ filter, sort, pagination }: Props) => {
         {response.data.Items?.map((realState) => {
           return (
             <li
-              className="w-full h-60 relative my-8 flex items-end justify-end border-b-foreground border-b-1"
+              className="w-full h-60 relative my-8 flex items-end justify-end border-b-gray-300  border-b-1"
               key={realState.Id}
             >
               <Link href={`/real-states/${realState.Id}`}>
