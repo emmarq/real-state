@@ -1,9 +1,12 @@
 "use client";
 
 import { parseNumber, setParam } from "@/utils";
-import { RealStateFilter } from "@/utils/service";
+import { fetchPriceRange, RealStateFilter } from "@/utils/service";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { Suspense, use, useEffect, useRef, useState } from "react";
+import DualRangeSlider from "../MultiRangeSlider";
+import { SliderRange } from "@/components/MultiRangeSlider/MultiRangeSlider";
+import { RealStatePriceRange } from "@/api";
 
 type TextInputProps = {
   defaultValue: string;
@@ -14,7 +17,7 @@ type TextInputProps = {
 const TextInput = ({ defaultValue, label, onChangeText }: TextInputProps) => {
   return (
     <div className="py-1 flex align-bottom items-end">
-      <label className="w-20 inline-block flex-none">{label}</label>
+      <label className="w-24 inline-block flex-none">{label}</label>
       <div className="border-b-1 border-amber-50 flex-1">
         <input
           className="w-full"
@@ -23,6 +26,37 @@ const TextInput = ({ defaultValue, label, onChangeText }: TextInputProps) => {
           onChange={(evt) => {
             onChangeText(evt.target.value);
           }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const PriceRange = ({
+  defaultValue,
+  onChange,
+}: {
+  defaultValue: SliderRange;
+  onChange: (range: SliderRange) => void;
+}) => {
+  const [range, setRange] = useState<RealStatePriceRange>();
+  useEffect(() => {
+    fetchPriceRange().then((response) => {
+      setRange(response.data);
+    });
+  }, []);
+
+  if (!range?.MinPrice || !range.MaxPrice) return null;
+
+  return (
+    <div className="py-2 flex items-center">
+      <label className="w-24">Price range</label>
+      <div className="relative flex-1">
+        <DualRangeSlider
+          max={range.MaxPrice}
+          min={range.MinPrice}
+          defaultValue={defaultValue}
+          onChange={onChange}
         />
       </div>
     </div>
@@ -77,6 +111,14 @@ const Filter = () => {
           handleChangeFilter({ ...filter, address });
         }}
       />
+      <Suspense>
+        <PriceRange
+          defaultValue={{ min: filter.minPrice, max: filter.maxPrice }}
+          onChange={({ min, max }) => {
+            handleChangeFilter({ ...filter, minPrice: min, maxPrice: max });
+          }}
+        />
+      </Suspense>
     </div>
   );
 };
