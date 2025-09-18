@@ -33,6 +33,7 @@ const Sort = () => {
     <div className="px-4 mt-8 flex justify-end">
       <label className="pr-4">Sort by</label>
       <select
+        className="bg-background"
         defaultValue={sortBy}
         onChange={(evt) => {
           handleChangeSort({ sortDirection, sortBy: evt.target.value });
