@@ -62,7 +62,7 @@ const MultiRangeSlider = ({
   }, [minVal, maxVal]);
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <input
         type="range"
         min={min}
