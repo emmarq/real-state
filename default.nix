@@ -3,12 +3,16 @@
 }:
 with pkgs;
 mkShell {
+  nativeBuildInputs = with pkgs; [
+    playwright-driver.browsers
+  ];
   packages = [
     csharp-ls
     netcoredbg
     dotnet-sdk_9
     nodejs
     openapi-generator-cli
+    playwright-test
     mongosh
     tmux
     nushell
@@ -27,6 +31,8 @@ mkShell {
   ];
 
 shellHook = ''
+    export PLAYWRIGHT_BROWSERS_PATH=${pkgs.playwright-driver.browsers}
+    export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
     LAZYVIM_CONFIG_DIR="$HOME/.config/nvim-lazy"
 
     if [ ! -d "$LAZYVIM_CONFIG_DIR" ]; then
