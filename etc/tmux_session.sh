@@ -31,5 +31,7 @@ tmux send-keys -t "$SESSION_NAME:$WINDOW_NAME.2" "nu" C-m
 # Select the first pane to focus on it
 tmux select-pane -t 0
 
+tmux set -g mouse on
+
 # Attach to the session
 tmux attach-session -t "$SESSION_NAME"

@@ -1,6 +1,9 @@
 { revA ? "e50c883d982e8f6d4333880e900f6ed19215e8ea", pkgs ? import
   (fetchTarball "https://github.com/NixOS/nixpkgs/archive/${revA}.tar.gz") { }
 }:
+let
+  nvim = pkgs.neovim;
+in
 with pkgs;
 mkShell {
   nativeBuildInputs = with pkgs; [
@@ -16,7 +19,7 @@ mkShell {
     mongosh
     tmux
     nushell
-    neovim
+    nvim
     git
     lazygit
     curl
