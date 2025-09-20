@@ -31,8 +31,11 @@ const Sort = () => {
 
   return (
     <div className="px-4 mt-8 flex justify-end">
-      <label className="pr-4">Sort by</label>
+      <label htmlFor="sortBy" className="pr-4">
+        Sort by
+      </label>
       <select
+        id="sortBy"
         className="bg-background"
         defaultValue={sortBy}
         onChange={(evt) => {
@@ -45,6 +48,8 @@ const Sort = () => {
         <option value="Price">Price</option>
       </select>
       <div
+        role="button"
+        aria-label="Toggle direction"
         className="pl-4 cursor-pointer"
         onClick={() => {
           handleChangeSort({
@@ -54,9 +59,9 @@ const Sort = () => {
         }}
       >
         {sortDirection === "desc" ? (
-          <OrderDescIcon width={20} />
+          <OrderDescIcon aria-label="Sort descending" width={20} />
         ) : (
-          <OrderAscIcon width={20} />
+          <OrderAscIcon aria-label="Sort ascending" width={20} />
         )}
       </div>
     </div>

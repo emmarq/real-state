@@ -10,30 +10,36 @@ const RealStateList = async ({ filter, sort, pagination }: Props) => {
 
   return (
     <div>
-      <ul>
-        {response.data.Items?.map((realState) => {
-          return (
-            <li
-              className="w-full h-60 relative my-8 flex items-end justify-end border-b-gray-300  border-b-1"
-              key={realState.Id}
-            >
-              <Link href={`/real-states/${realState.Id}`}>
-                <div className="absolute z-10 inset-0 bg-gradient-to-b from-transparent to-background"></div>
-                <Image
-                  className="z-0"
-                  src={realState.Image!}
-                  fill
-                  objectFit="cover"
-                  alt={`Image of ${realState.Name}`}
-                />
-                <div className="z-20 relative text-2xl p-4 text-end">
-                  {realState.Name}
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      {response.data.TotalCount ? (
+        <ul>
+          {response.data.Items?.map((realState) => {
+            return (
+              <li
+                className="w-full h-60 relative my-8 flex items-end justify-end border-b-gray-300  border-b-1"
+                key={realState.Id}
+              >
+                <Link href={`/real-states/${realState.Id}`}>
+                  <div className="absolute z-10 inset-0 bg-gradient-to-b from-transparent to-background"></div>
+                  <Image
+                    className="z-0"
+                    src={realState.Image!}
+                    fill
+                    objectFit="cover"
+                    alt={`Image of ${realState.Name}`}
+                  />
+                  <div className="z-20 relative text-2xl p-4 text-end">
+                    {realState.Name}
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="text-center py-8 text-2xl text-gray-500 italic">
+          There is no real states that match the query
+        </p>
+      )}
       <Pagination
         currentPage={response.data.PageNumber || 1}
         nextPage={response.data.HasNext}

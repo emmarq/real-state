@@ -6,6 +6,7 @@ import { currencyFormatter } from "@/utils";
 export type SliderRange = { min?: number; max?: number };
 
 interface MultiRangeSliderProps {
+  label?: string;
   min: number;
   max: number;
   defaultValue?: SliderRange;
@@ -13,6 +14,7 @@ interface MultiRangeSliderProps {
 }
 
 const MultiRangeSlider = ({
+  label = "range",
   min,
   max,
   defaultValue,
@@ -65,6 +67,7 @@ const MultiRangeSlider = ({
     <div className={styles.container}>
       <input
         type="range"
+        aria-label={`Min value for ${label}`}
         min={min}
         max={max}
         value={minVal}
@@ -82,6 +85,7 @@ const MultiRangeSlider = ({
       />
       <input
         type="range"
+        aria-label={`Max value for ${label}`}
         min={min}
         max={max}
         value={maxVal}

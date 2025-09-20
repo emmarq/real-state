@@ -22,14 +22,14 @@ const Pagination = ({ currentPage, prevPage, nextPage }: Props) => {
     <ul className="flex justify-center gap-3 pb-4">
       <li>
         {prevPage ? (
-          <Link href={prevLink}>
+          <Link href={prevLink} role="button">
             <div className="flex">
               <LeftArrowIcon width={20} />
               <span>Previous</span>
             </div>
           </Link>
         ) : (
-          <div className="flex">
+          <div className="flex" role="button" aria-disabled>
             <LeftArrowIcon width={20} className="text-gray-500" />
             <span className="cursor-not-allowed text-gray-500">Previous</span>
           </div>
@@ -37,14 +37,14 @@ const Pagination = ({ currentPage, prevPage, nextPage }: Props) => {
       </li>
       <li>
         {nextPage ? (
-          <Link href={nextLink}>
+          <Link href={nextLink} role="button">
             <div className="flex">
               <span>Next</span>
               <RightArrowIcon width={20} />
             </div>
           </Link>
         ) : (
-          <div className="flex">
+          <div className="flex" role="button" aria-disabled>
             <span className="cursor-not-allowed text-gray-500">Next</span>
             <RightArrowIcon width={20} className="text-gray-500" />
           </div>
